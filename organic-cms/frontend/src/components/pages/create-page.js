@@ -126,7 +126,10 @@ function CreatePage(props) {
             inputProps={{ placeholder: "Add a keyword" }}
           />
         </div>
-        <button type="submit" className="btn btn-primary cmscolor">
+        <small id="keywordsHelp" className="form-text text-muted">
+          Please press <b>Tab</b> or <b>Enter</b> key to add keyword.
+        </small>
+        <button type="submit" className="btn btn-primary cmscolor mt-3">
           {id ? "Update" : "Create"}
         </button>
       </form>
