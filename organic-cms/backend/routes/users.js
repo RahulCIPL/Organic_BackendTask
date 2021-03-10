@@ -1,3 +1,4 @@
+
 const router = require("express").Router();
 
 const auth = require("../middleware/auth");
@@ -8,19 +9,18 @@ const jwt = require("jsonwebtoken");
 
 const Users = require("../models/users.model");
 
+//Used to fetch common message from message file
+const  allRequired  =  require( "../misc/messages");
+
+
 // Purpose: Register User from Signup Page
 // Created By: CIPL
 router.post("/register", async (req, res) => {
   try {
-    let {
-      name,
-      emailaddress,
-      password,
-      passwordCheck
-    } = req.body;
+    let { name, emailaddress, password, passwordCheck } = req.body;
     // validate
     if (!name || !emailaddress || !password || !passwordCheck) {
-      return res.status(400).json({ msg: "Please enter all the fields!" });
+      return res.status(400).json({ msg: allRequired });
     }
     if (password.length < 5) {
       return res
@@ -45,7 +45,7 @@ router.post("/register", async (req, res) => {
       name,
       emailaddress,
       password: passwordHash,
-      status:1,
+      status: 1,
     });
 
     const savedUser = await newUser.save();
@@ -62,7 +62,7 @@ router.post("/login", async (req, res) => {
     const { emailaddress, password } = req.body;
     // validate
     if (!emailaddress || !password) {
-      return res.status(400).json({ msg: "Please enter all the fields!" });
+      return res.status(400).json({ msg: allRequired });
     }
 
     const user = await Users.findOne({ emailaddress: emailaddress });
@@ -132,7 +132,7 @@ router.post("/add", auth, async (req, res) => {
     } = req.body;
     // validate all fields
     if (!name || !emailaddress || !password || !passwordCheck) {
-      return res.status(400).json({ msg: "Please enter all the fields!" });
+      return res.status(400).json({ msg: allRequired });
     }
     if (password.length < 5) {
       return res
@@ -190,7 +190,7 @@ router.get("/:id", auth, async (req, res) => {
 router.delete("/:id", auth, async (req, res) => {
   try {
     await Users.findByIdAndDelete(req.params.id);
-    res.json('User deleted!')
+    res.json("User deleted!");
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -222,7 +222,10 @@ router.post("/update/:id", auth, async (req, res) => {
         .status(400)
         .json({ msg: "Enter the same password twice for verification." });
     }
-    const existingUser = await Users.find({ emailaddress: emailaddress, _id: {$ne :req.params.id } });
+    const existingUser = await Users.find({
+      emailaddress: emailaddress,
+      _id: { $ne: req.params.id },
+    });
     if (existingUser) {
       return res
         .status(400)
@@ -231,20 +234,21 @@ router.post("/update/:id", auth, async (req, res) => {
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-    
-    Users.findById(req.params.id)
-    .then(user => {
-      user.name = name;
-      user.emailaddress = emailaddress;
-      user.status = status;
-      user.password = passwordHash;
-      user.updatedBy = createdBy;
 
-      user.save()
-        .then(() => res.json('User updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch((err) => res.status(400).json("Error: " + err));
+    Users.findById(req.params.id)
+      .then((user) => {
+        user.name = name;
+        user.emailaddress = emailaddress;
+        user.status = status;
+        user.password = passwordHash;
+        user.updatedBy = createdBy;
+
+        user
+          .save()
+          .then(() => res.json("User updated!"))
+          .catch((err) => res.status(400).json("Error: " + err));
+      })
+      .catch((err) => res.status(400).json("Error: " + err));
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
