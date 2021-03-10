@@ -1,8 +1,9 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
+
 
 // Purpose: Users Schema
 // Created By: CIPL
-const usersSchema = new Schema(
+const usersSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     emailaddress: { type: String, required: true, unique: true },
@@ -16,4 +17,4 @@ const usersSchema = new Schema(
   }
 );
 
-export default Users = model("users", usersSchema);
+module.exports = Users = mongoose.model("users", usersSchema);

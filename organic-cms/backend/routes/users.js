@@ -1,12 +1,12 @@
 const router = require("express").Router();
 
-import { genSalt, hash, compare } from "bcrypt";
+const bcrypt = require("bcrypt");
 
-import { sign, verify } from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-import auth from "../middleware/auth";
+const auth = require("../middleware/auth");
 
-import Users, { findOne, findById, find, findByIdAndDelete } from "../models/users.model";
+const Users = require("../models/users.model");
 
 // Purpose: Register User from Signup Page
 // Created By: CIPL
@@ -246,4 +246,4 @@ router.post("/update/:id", auth, async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;
