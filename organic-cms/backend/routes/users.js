@@ -222,7 +222,7 @@ router.post("/update/:id", auth, async (req, res) => {
         .status(400)
         .json({ msg: "Enter the same password twice for verification." });
     }
-    const existingUser = await Users.find({
+    const existingUser = await Users.findOne({
       emailaddress: emailaddress,
       _id: { $ne: req.params.id },
     });
