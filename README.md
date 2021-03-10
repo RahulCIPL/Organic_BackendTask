@@ -11,3 +11,6 @@ backend consists MongoDB and Express.
 ## frontend
 
 frontend consists React and it is a declarative, efficient, and flexible JavaScript library for building user interfaces. 
+
+# Note
+Please install Node and NPM first to run this project.
