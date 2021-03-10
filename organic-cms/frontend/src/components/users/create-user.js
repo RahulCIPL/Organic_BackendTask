@@ -16,7 +16,7 @@ const statusEnums = {
   },
 };
 
-// Purpose: Create user 
+// Purpose: Create user
 // Created By: CIPL
 function CreateUser(props) {
   const [id, setId] = useState(props.match.params.id);
@@ -37,35 +37,33 @@ function CreateUser(props) {
   useEffect(() => {
     if (!userData.user) {
       history.push("/login");
-    }
-    else{
+    } else {
       createOrEditUser();
     }
-    
   }, []);
 
-    //Edit User details for Update User
+  //Edit User details for Update User
   const createOrEditUser = async () => {
     if (id) {
-        axios
-      .get("/users/"+ id, {
-        headers: { "x-auth-token": userData.token },
-      })
-      .then((response) => {
-          console.log(response.data.name)
-        if(response){
+      axios
+        .get("/users/" + id, {
+          headers: { "x-auth-token": userData.token },
+        })
+        .then((response) => {
+          console.log(response.data.name);
+          if (response) {
             setName(response.data.name);
             setEmailaddress(response.data.emailaddress);
             setStatus(response.data.status ? "1" : "0");
           }
-      })
-      .catch((err) => {
-        err && setError(err);
-      });
+        })
+        .catch((err) => {
+          err && setError(err);
+        });
     }
   };
 
-    //User Submit Event
+  //User Submit Event
   const submit = async (e) => {
     e.preventDefault();
 
@@ -98,8 +96,8 @@ function CreateUser(props) {
 
   return (
     <div className="container">
-      <h4 className="mt-3">
-      {id ? 'Update User' : 'Create User'}
+      <h4 className="mt-3 mb-3">
+        {id ? "Update User" : "Create User"}
         <div className="float-right mb-3 ">
           <button
             type="button"
@@ -174,7 +172,7 @@ function CreateUser(props) {
           </select>
         </div>
         <button type="submit" className="btn btn-primary cmscolor">
-         {id ? 'Update' : 'Create'}
+          {id ? "Update" : "Create"}
         </button>
       </form>
     </div>

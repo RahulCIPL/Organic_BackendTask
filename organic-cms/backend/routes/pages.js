@@ -41,12 +41,21 @@ router.post("/add", auth, async (req, res) => {
   });
 
   // validate
-  if (!title ) {
+  if (!title) {
     return res.status(400).json({ msg: "Please enter Title" });
   }
 
-  if (!content ) {
+  if (!content) {
     return res.status(400).json({ msg: "Please enter Content" });
+  }
+
+  const titleExists = await Pages.findOne({ title: title });
+  if (titleExists) {
+    return res
+      .status(400)
+      .json({
+        msg: "A page with this title already exists.",
+      });
   }
 
   newPage
@@ -65,10 +74,20 @@ router.post("/update/:id", auth, async (req, res) => {
     return res.status(400).json({ msg: "Please enter Title" });
   }
 
-  if (!content ) {
+  if (!content) {
     return res.status(400).json({ msg: "Please enter Content" });
   }
-  
+
+  const existingPage = await Pages.findOne({
+    title: title,
+    _id: { $ne: req.params.id },
+  });
+  if (existingPage) {
+    return res
+      .status(400)
+      .json({ msg: "A page with this title already exists." });
+  }
+
   Pages.findById(req.params.id)
     .then((page) => {
       page.title = title;

@@ -130,7 +130,7 @@ router.post("/add", auth, async (req, res) => {
       status,
       createdBy,
     } = req.body;
-    // validate
+    // validate all fields
     if (!name || !emailaddress || !password || !passwordCheck) {
       return res.status(400).json({ msg: "Please enter all the fields!" });
     }
@@ -144,6 +144,7 @@ router.post("/add", auth, async (req, res) => {
         .status(400)
         .json({ msg: "Enter the same password twice for verification." });
     }
+
     const existingUser = await Users.findOne({ emailaddress: emailaddress });
     if (existingUser) {
       return res
@@ -221,12 +222,12 @@ router.post("/update/:id", auth, async (req, res) => {
         .status(400)
         .json({ msg: "Enter the same password twice for verification." });
     }
-    // const existingUser = await Users.find({ emailaddress: emailaddress, _id: {$ne :id } });
-    // if (existingUser) {
-    //   return res
-    //     .status(400)
-    //     .json({ msg: "A user with this emailaddress already exists." });
-    // }
+    const existingUser = await Users.find({ emailaddress: emailaddress, _id: {$ne :req.params.id } });
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ msg: "A user with this emailaddress already exists." });
+    }
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);

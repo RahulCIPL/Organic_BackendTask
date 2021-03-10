@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../context/userContext";
 import ErrorNotice from "../misc/errorNotice";
-import TagsInput from 'react-tagsinput'
- 
+import TagsInput from "react-tagsinput";
+
 //Used for keyword added as Tags style
-import 'react-tagsinput/react-tagsinput.css'
+import "react-tagsinput/react-tagsinput.css";
 
 // Purpose: Create Page
 // Created By: CIPL
@@ -22,11 +22,9 @@ function CreatePage(props) {
     //Check user is Loggedin or not
     if (!userData.user) {
       history.push("/login");
-    }
-    else{
+    } else {
       createOrEditPage();
     }
-    
   }, []);
 
   //Edit Page details for Update Page
@@ -75,16 +73,16 @@ function CreatePage(props) {
     }
   };
 
- const handleChange = (keyword) =>{
-    setKeywords(keyword)
-  }
+  const handleChange = (keyword) => {
+    setKeywords(keyword);
+  };
 
   const back = () => history.push("/pages");
 
   return (
     <div className="container">
-      <h4 className="mt-3">
-      {id ? "Update Page" : "Create Page"}
+      <h4 className="mt-3 mb-3">
+        {id ? "Update Page" : "Create Page"}
         <div className="float-right mb-3 ">
           <button
             type="button"
@@ -122,8 +120,11 @@ function CreatePage(props) {
         </div>
         <div className="form-group">
           <label>Keywords</label>
-          <TagsInput value={keywords} onChange={handleChange}
-           inputProps={{placeholder: 'Add a keyword'}} />
+          <TagsInput
+            value={keywords}
+            onChange={handleChange}
+            inputProps={{ placeholder: "Add a keyword" }}
+          />
         </div>
         <button type="submit" className="btn btn-primary cmscolor">
           {id ? "Update" : "Create"}
