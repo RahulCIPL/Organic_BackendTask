@@ -4,13 +4,15 @@ This project was developed using ExpressJs with mongoose.
 
 Express: A web application framework for Node.js.
 
+JSON Web Tokens are a good way of securely transmitting information between client and sever using public/private key pairs.
+
 MongoDB: A document-based open source database.
 
 ### Connection with MongoDB
 We have hosted our database in the cloud using MongoDB Atlas and you’ll get a connection string from .env file. Open [https://www.mongodb.com/cloud/atlas] for more info. 
+
 You can use this connection string to connect DB from MongoDBCompass. Open [https://www.mongodb.com/products/compass] for more info about compass. 
 
-JSON Web Tokens are a good way of securely transmitting information between client and sever using public/private key pairs.
 
 ## Developments
 
