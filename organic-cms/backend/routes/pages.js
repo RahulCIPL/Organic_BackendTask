@@ -7,7 +7,7 @@ const Pages = require("../models/pages.model");
 // Purpose: Get All Pages
 // Created By: CIPL
 router.get("/", auth, async (req, res) => {
-  find()
+  Pages.find()
     .then((pages) => res.json(pages))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -15,7 +15,7 @@ router.get("/", auth, async (req, res) => {
 // Purpose: Get Pages by Id
 // Created By: CIPL
 router.get("/:id", auth, async (req, res) => {
-  findById(req.params.id)
+  Pages.findById(req.params.id)
     .then((page) => res.json(page))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -23,7 +23,7 @@ router.get("/:id", auth, async (req, res) => {
 // Purpose: Delete Page by Id
 // Created By: CIPL
 router.delete("/:id", auth, async (req, res) => {
-  findByIdAndDelete(req.params.id)
+  Pages.findByIdAndDelete(req.params.id)
     .then(() => res.json("Page deleted."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
@@ -69,7 +69,7 @@ router.post("/update/:id", auth, async (req, res) => {
     return res.status(400).json({ msg: "Please enter Content" });
   }
   
-  findById(req.params.id)
+  Pages.findById(req.params.id)
     .then((page) => {
       page.title = title;
       page.content = content;
