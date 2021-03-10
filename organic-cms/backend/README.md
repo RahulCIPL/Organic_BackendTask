@@ -1,6 +1,6 @@
 # Getting Started with ExpressJs with Mongoose and JSON Web Tokens
 
-This project was developed using ExpressJs with moongoose.
+This project was developed using ExpressJs with mongoose.
 
 Express: A web application framework for Node.js.
 
