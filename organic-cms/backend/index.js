@@ -1,14 +1,14 @@
-const express = require("express");
+import express, { json } from "express";
 
-const mongoose = require("mongoose");
+import { connect, connection as _connection } from "mongoose";
 
-const cors = require("cors");
+import cors from "cors";
 
 require("dotenv").config();
 
 // set up express
 const app = express();
-app.use(express.json());
+app.use(json());
 
 //middlewares
 app.use(cors());
@@ -19,13 +19,19 @@ app.listen(PORT, () => console.log(`The server has started on port: ${PORT}`));
 /*Mongoose Connection start*/
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(
+connect(
   uri,
   { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 
-const connection = mongoose.connection;
+const connection = _connection;
 connection.once("open", () => {
   console.log("MongoDB database connection established successfully");
 });
 /*Mongoose Connection end */
+
+/* set up routes start */
+const usersRouter = require('./routes/users');
+
+app.use('/users', usersRouter);
+/* set up routes end */
