@@ -142,17 +142,17 @@ router.post("/add", auth, async (req, res) => {
     if (password !== passwordCheck) {
       return res
         .status(400)
-        .json({ msg: "Password and Confirm Password is not same." });
+        .json({ msg: "Enter the same password twice for verification." });
     }
-    const existingUser = await findOne({ emailaddress: emailaddress });
+    const existingUser = await Users.findOne({ emailaddress: emailaddress });
     if (existingUser) {
       return res
         .status(400)
         .json({ msg: "A user with this emailaddress already exists." });
     }
 
-    const salt = await genSalt();
-    const passwordHash = await hash(password, salt);
+    const salt = await bcrypt.genSalt();
+    const passwordHash = await bcrypt.hash(password, salt);
     const newUser = new Users({
       name,
       emailaddress,
